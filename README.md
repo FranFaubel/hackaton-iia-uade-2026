@@ -71,6 +71,65 @@ Cuando un estudiante termina de estudiar un tema, el tutor realiza una evaluaci�
 
 4. **Autonomía (U):** presenta una actividad individual sin proporcionar pistas ni explicaciones. Evalúa si puede resolverla por sus propios medios.
 
+### Rúbrica de evaluación (0 a 100 puntos)
+
+El tutor utiliza una escala de cinco niveles para evaluar cada una de las cuatro dimensiones. La IA analiza las respuestas del estudiante y asigna un puntaje según los criterios establecidos.
+
+**Escala general:**
+
+* **0 puntos – Nulo:** no responde o la respuesta es incorrecta y no demuestra conocimientos.
+* **25 puntos – Muy bajo:** demuestra conocimientos mínimos, pero presenta errores fundamentales.
+* **50 puntos – Parcial:** comprende algunos conceptos, pero presenta dificultades importantes para explicarlos o aplicarlos.
+* **75 puntos – Satisfactorio:** demuestra una comprensión adecuada, resuelve correctamente y presenta pequeñas imprecisiones.
+* **100 puntos – Completo:** demuestra dominio del contenido, responde correctamente y justifica sus decisiones sin dificultades.
+
+**Criterios específicos por dimensión:**
+
+**1. Comprensión conceptual (C):**
+
+* 0: No logra explicar el concepto.
+* 25: Reconoce algunos términos, pero no comprende su significado.
+* 50: Explica parcialmente el concepto, con errores importantes.
+* 75: Explica correctamente el concepto con pequeñas imprecisiones.
+* 100: Explica el concepto con claridad, utilizando sus propias palabras y ejemplos correctos.
+
+**2. Aplicación práctica (A):**
+
+* 0: No logra resolver los ejercicios.
+* 25: Identifica algunos elementos, pero no consigue aplicar el procedimiento.
+* 50: Resuelve parcialmente los ejercicios, con errores importantes.
+* 75: Resuelve correctamente la mayoría de las situaciones planteadas.
+* 100: Resuelve correctamente ejercicios nuevos y aplica los conocimientos en diferentes situaciones.
+
+**3. Justificación del razonamiento (R):**
+
+* 0: No puede justificar su respuesta.
+* 25: Menciona pasos aislados sin explicar su relación.
+* 50: Explica parcialmente el procedimiento, pero presenta inconsistencias.
+* 75: Justifica correctamente los pasos realizados, con pequeñas omisiones.
+* 100: Explica de manera clara y coherente cada paso y fundamenta sus decisiones.
+
+**4. Autonomía (U):**
+
+* 0: No puede resolver la actividad sin ayuda.
+* 25: Necesita asistencia constante para avanzar.
+* 50: Resuelve parcialmente con varias pistas o intervenciones del tutor.
+* 75: Resuelve correctamente con una ayuda mínima.
+* 100: Resuelve la actividad de manera independiente, sin pistas ni asistencia.
+
+**Cálculo de los puntajes:**
+
+Se realizan dos actividades por dimensión y se promedian sus resultados para obtener C, A, R y U.
+
+El resultado final se calcula mediante:
+
+Dominio autónomo = (C × 0,25) + (A × 0,30) + (R × 0,25) + (U × 0,20).
+
+**Criterio para avanzar:**
+
+El estudiante obtiene un resultado satisfactorio cuando alcanza al menos 70 puntos en el resultado general y un mínimo de 60 puntos en cada una de las cuatro dimensiones. Si no cumple ambas condiciones, el tutor identifica sus dificultades y genera actividades personalizadas de refuerzo.
+
+
 Cada dimensión recibe un puntaje de 0 a 100 mediante una rúbrica de evaluación. Si se realizan dos actividades por dimensión, se promedian sus calificaciones.
 
 Finalmente, el sistema calcula:
