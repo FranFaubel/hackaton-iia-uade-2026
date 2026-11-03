@@ -146,28 +146,86 @@ Este proceso se repite hasta que el alumno demuestra un nivel suficiente de comp
 
 | | Predice SÍ | Predice NO |
 |---|---|---|
-| **Real SÍ** | VP = <> | FN = <> |
-| **Real NO** | FP = <> | VN = <> |
+| **Real SÍ** | VP = <3> | FN = <1> |
+| **Real NO** | FP = <0> | VN = <10> |
 
 **Prueba (casos 15–20)**
 
 | | Predice SÍ | Predice NO |
 |---|---|---|
-| **Real SÍ** | VP = <> | FN = <> |
-| **Real NO** | FP = <> | VN = <> |
+| **Real SÍ** | VP = <4> | FN = <0> |
+| **Real NO** | FP = <0> | VN = <2> |
 
 | Métrica | Entrenamiento | Prueba |
 |---|---|---|
-| Exactitud | <> | <> |
-| Precisión | <> | <> |
-| Sensibilidad | <> | <> |
-| Especificidad | <> | <> |
+| Exactitud | <92.86%> | <100%> |
+| Precisión | <100%> | <100%> |
+| Sensibilidad | <75%> | <100%> |
+| Especificidad | <100%> | <100%> |
 
-**Entrenamiento contra prueba.** <¿Hay diferencia? ¿Por qué? ¿Sobreajuste o generalización?>
+**Entrenamiento contra prueba.** <Al comparar los resultados del entrenamiento con los de prueba, observamos que el sistema obtiene un 92,86% de exactitud durante el entrenamiento y un 100% en los casos de prueba.
+
+Esto significa que el sistema logra clasificar correctamente todos los casos que no utilizó para establecer su funcionamiento.
+
+No observamos indicios de sobreajuste, ya que el rendimiento no disminuye al evaluar casos nuevos. Por el contrario, mejora respecto del entrenamiento, lo que representa una primera evidencia favorable de generalización.
+
+Sin embargo, debemos considerar que el conjunto de prueba contiene solamente seis casos, por lo que no podemos garantizar que estos resultados se mantengan con una cantidad mayor de estudiantes.
+
+Durante el entrenamiento se produjo un falso negativo en el caso 3. Este estudiante obtuvo un 67% de aciertos, pero su resultado real era SÍ. Al no alcanzar el umbral del 70%, nuestro sistema lo clasificó incorrectamente como NO.
+
+Este caso demuestra una de las limitaciones de utilizar únicamente el porcentaje de aciertos: un estudiante puede comprender un tema aunque no alcance exactamente el umbral establecido.
+
+Conclusión:
+
+Los resultados muestran que nuestro sistema tiene un buen desempeño inicial para clasificar el rendimiento de los estudiantes. Sin embargo, el porcentaje de aciertos no garantiza por sí solo que exista una comprensión real de los conocimientos.
+
+Por este motivo, nuestro tutor incorpora una segunda instancia de evaluación, en la que la inteligencia artificial analiza la comprensión conceptual, la aplicación práctica, la justificación del razonamiento y la autonomía.
+
+De esta manera, buscamos que el sistema no confunda una respuesta correcta con un aprendizaje verdaderamente adquirido.
+
+Si bien el sistema obtuvo un 100% en todas las métricas del conjunto de prueba, este resultado debe interpretarse con cautela debido a que solamente contamos con seis casos. Además, los datos presentan una separación relativamente clara respecto del umbral de clasificación establecido. Por lo tanto, este resultado no garantiza que el sistema mantenga el mismo rendimiento ante una muestra más amplia y diversa. Será necesario realizar nuevas pruebas con estudiantes reales para evaluar su capacidad de generalización.
+
+>
 
 ## 4. El error más caro
 
-<¿Es peor el falso positivo o el falso negativo en su problema? ¿Por qué, según la ficha? ¿Qué cambiaron en el sistema para cometer menos ese error?>
+<¿Qué es peor: el falso positivo o el falso negativo?
+
+En nuestro tutor educativo, el falso positivo ocurre cuando el sistema considera que un estudiante comprendió un tema, cuando en realidad todavía no lo domina.
+
+El falso negativo ocurre cuando el sistema considera que un estudiante no comprendió un tema, aunque realmente sí lo haya aprendido.
+
+Consideramos que el falso positivo es más perjudicial, por las siguientes razones:
+
+El estudiante puede avanzar a contenidos nuevos sin tener los conocimientos necesarios.
+Puede acumular dificultades que afecten su aprendizaje futuro.
+La plataforma puede mostrarles a los padres que el estudiante avanzó de tema, generando una percepción equivocada de su progreso.
+El tutor deja de ofrecerle herramientas de refuerzo cuando todavía las necesita.
+
+En cambio, un falso negativo puede provocar que un estudiante que sí comprendió tenga que realizar ejercicios adicionales o repetir una explicación. Aunque esto puede generar frustración y pérdida de tiempo, no implica necesariamente que avance con conocimientos incompletos.
+
+¿Qué cambiamos en el sistema para cometer menos ese error?
+
+Incorporamos una segunda instancia de evaluación antes de permitir que el estudiante avance de tema.
+
+A partir de ahora, no alcanza con obtener un 70% de aciertos para considerar que comprendió.
+
+El tutor deberá:
+
+Presentar un ejercicio nuevo que evalúe el mismo concepto.
+Solicitar que el estudiante explique cómo llegó al resultado.
+Comprobar si puede aplicar el conocimiento en una situación diferente.
+Realizar una actividad de resolución autónoma, sin pistas ni asistencia.
+
+Nueva regla SI-ENTONCES:
+
+SI el estudiante obtiene al menos un 70% de aciertos, PERO no demuestra comprensión, aplicación y razonamiento en la evaluación complementaria, ENTONCES el sistema no confirma el dominio del tema y propone actividades de refuerzo.
+
+SI supera ambas instancias, ENTONCES el sistema considera que existen evidencias suficientes para avanzar.
+
+Conclusión
+
+Priorizamos reducir los falsos positivos porque nuestro objetivo es garantizar que el estudiante adquiera conocimientos sólidos antes de avanzar hacia nuevos contenidos. Preferimos que el tutor solicite una comprobación adicional antes que considerar aprendido un tema que el alumno todavía no domina.>
 
 ## 5. ¿Comparado contra qué?
 
