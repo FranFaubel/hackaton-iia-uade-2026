@@ -229,14 +229,22 @@ Priorizamos reducir los falsos positivos porque nuestro objetivo es garantizar q
 
 ## 5. ¿Comparado contra qué?
 
-**Línea base trivial.** <Qué resultado saca un sistema que responde siempre lo mismo, y cómo se compara el suyo.>
+**Línea base trivial.** <Para establecer una comparación, utilizamos una línea base trivial que consiste en un sistema que siempre predice la categoría más frecuente del conjunto de entrenamiento.
+
+En nuestro caso, de los 14 casos de entrenamiento, 10 tienen resultado real NO y 4 tienen resultado real SÍ. Por lo tanto, la línea base consiste en responder siempre NO.
+
+Este sistema obtiene una exactitud del 71,43% en entrenamiento. Al aplicarlo sobre los seis casos de prueba, obtiene solamente un 33,33% de exactitud, ya que cuatro de los seis estudiantes tienen resultado real SÍ.
+
+En comparación, nuestro sistema obtiene un 92,86% de exactitud en entrenamiento y un 100% en prueba.
+
+Esto demuestra que nuestro sistema supera la estrategia trivial y que las reglas de clasificación aportan información útil para tomar decisiones.>
 
 | Checklist (Clase 6) | Respuesta |
 |---|---|
-| ¿Qué datos? | <> |
-| ¿Qué métrica? | <> |
-| ¿Comparado contra qué? | <> |
-| ¿Quién lo midió? | <> |
+| ¿Qué datos? | <Los 20 casos proporcionados en el archivo M09.csv, divididos en 14 casos de entrenamiento y 6 de prueba.> |
+| ¿Qué métrica? | <Exactitud, complementada con precisión, sensibilidad y especificidad.> |
+| ¿Comparado contra qué? | <Una línea base trivial que siempre predice la categoría más frecuente del entrenamiento (NO), obteniendo 71,43% de exactitud en entrenamiento y 33,33% en prueba.> |
+| ¿Quién lo midió? | <Nuestro equipo, aplicando las reglas de clasificación a los datos proporcionados y comparando las predicciones con los resultados reales de cada caso.> |
 
 ## 6. Riesgo: el camino completo
 
