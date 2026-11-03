@@ -277,6 +277,47 @@ Por este motivo, nuestro tutor incorpora una segunda instancia de evaluación, e
 De esta manera, buscamos que el sistema no confunda una respuesta correcta con un aprendizaje verdaderamente adquirido.
 
 Si bien el sistema obtuvo un 100% en todas las métricas del conjunto de prueba, este resultado debe interpretarse con cautela debido a que solamente contamos con seis casos. Además, los datos presentan una separación relativamente clara respecto del umbral de clasificación establecido. Por lo tanto, este resultado no garantiza que el sistema mantenga el mismo rendimiento ante una muestra más amplia y diversa. Será necesario realizar nuevas pruebas con estudiantes reales para evaluar su capacidad de generalización.
+### C. Medición
+
+**¿Qué significa SÍ y NO en nuestro sistema?**
+
+En nuestro proyecto, SÍ significa que el estudiante aprobó la evaluación integradora y demostró dominio autónomo del contenido. Para ello, debe obtener un puntaje general igual o superior a 70 puntos y alcanzar al menos 60 puntos en cada una de las cuatro dimensiones: comprensión conceptual (C), aplicación práctica (A), justificación del razonamiento (R) y autonomía (U).
+
+NO significa que todavía no existe evidencia suficiente de dominio autónomo y que el estudiante necesita reforzar alguna dimensión.
+
+Por lo tanto, tener un 70% de aciertos en ejercicios anteriores no significa necesariamente que el estudiante haya aprobado la evaluación integradora.
+
+**¿Cómo se utilizaron los datos de M09.csv?**
+
+El archivo M09.csv no contiene las cuatro dimensiones C, A, R y U. Por este motivo, para realizar la evaluación cuantitativa utilizamos Accuracy (porcentaje de respuestas correctas en los últimos diez ejercicios) como variable de referencia y establecimos una regla simplificada:
+
+* Si Accuracy es mayor o igual al 70%, el sistema predice SÍ.
+* Si Accuracy es menor al 70%, el sistema predice NO.
+
+Esta regla se utilizó exclusivamente para construir las matrices de confusión y calcular las métricas de entrenamiento y prueba.
+
+**Diferencia entre la regla simplificada y el objetivo final**
+
+La regla basada en Accuracy no representa la decisión definitiva del tutor. El objetivo final es determinar si el estudiante realmente aprendió, utilizando las cuatro dimensiones C, A, R y U mediante una evaluación integradora.
+
+Por ejemplo, un estudiante puede tener un 67% de aciertos en los ejercicios anteriores y, aun así, aprobar la evaluación integradora si demuestra suficiente comprensión, aplicación, razonamiento y autonomía.
+
+En ese caso, el resultado correcto sería SÍ, aunque la regla simplificada basada en Accuracy prediga NO.
+
+**Uso de las demás variables de M09.csv**
+
+* Hints requested (pistas solicitadas): se utiliza para identificar cuánto acompañamiento necesita el estudiante.
+* Time per exercise (tiempo por ejercicio): permite observar el ritmo de resolución y adaptar la dificultad.
+* Topics advanced (temas avanzados): se utiliza para registrar el progreso semanal y mostrarlo al estudiante y a sus padres.
+
+Estas variables ayudan a personalizar la enseñanza, pero no determinan por sí solas si el estudiante domina un contenido.
+
+**Limitación de la evaluación**
+
+Las matrices de confusión y las métricas obtenidas con M09.csv evalúan únicamente la regla simplificada basada en Accuracy ≥ 70%. No permiten validar directamente el funcionamiento completo del tutor basado en C, A, R y U.
+
+Para validar el sistema final será necesario recopilar nuevos datos que incluyan los puntajes de las cuatro dimensiones y los resultados reales de las evaluaciones integradoras.
+
 
 >
 
