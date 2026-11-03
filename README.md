@@ -248,7 +248,37 @@ Esto demuestra que nuestro sistema supera la estrategia trivial y que las reglas
 
 ## 6. Riesgo: el camino completo
 
-<Datos → modelo → decisión → consecuencia aplicado a su caso. Al menos un riesgo concreto.>
+<Nuestro tutor educativo utiliza un proceso que comienza con la recopilación de datos del estudiante y termina con una decisión que puede influir directamente en su aprendizaje.
+
+1. Datos
+
+El sistema recibe información sobre el porcentaje de aciertos, las pistas solicitadas, el tiempo utilizado por ejercicio y los temas avanzados durante la semana.
+
+Riesgo: los datos pueden ser insuficientes para determinar si el estudiante realmente comprendió un contenido. Por ejemplo, obtener un porcentaje elevado de respuestas correctas no garantiza que pueda explicar o aplicar los conocimientos por sus propios medios.
+
+2. Modelo
+
+El sistema utiliza reglas SI-ENTONCES para interpretar los resultados y clasificar el nivel de aprendizaje del estudiante.
+
+Riesgo: las reglas pueden simplificar demasiado el proceso de aprendizaje. Un umbral fijo del 70% podría clasificar incorrectamente a un estudiante que comprende el tema, pero cometió algunos errores durante la evaluación.
+
+3. Decisión
+
+A partir de la clasificación, el tutor determina si el estudiante puede avanzar o necesita reforzar determinados conocimientos.
+
+Riesgo: un falso positivo podría hacer que el estudiante avance sin haber adquirido los conocimientos necesarios, mientras que un falso negativo podría obligarlo a repetir contenidos que ya domina.
+
+4. Consecuencia
+
+La decisión afecta el recorrido educativo del estudiante y también la información sobre su progreso que reciben sus padres.
+
+Riesgo: una clasificación incorrecta puede generar dificultades en contenidos posteriores, frustración en el estudiante y una percepción equivocada de su evolución académica por parte de los padres.
+
+¿Cómo reducimos estos riesgos?
+
+Incorporamos una segunda instancia de evaluación antes de confirmar que un tema fue aprendido. En ella, el tutor presenta ejercicios nuevos, solicita explicaciones sobre los procedimientos y comprueba si el estudiante puede aplicar los conocimientos de manera autónoma.
+
+De esta manera, evitamos que una única puntuación determine el aprendizaje y buscamos que las decisiones del sistema estén respaldadas por distintas evidencias.>
 
 ## 7. Bitácora
 
