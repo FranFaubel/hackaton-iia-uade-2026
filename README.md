@@ -286,8 +286,14 @@ De esta manera, evitamos que una única puntuación determine el aprendizaje y b
 
 | # | Qué le pedimos | Qué aceptamos | Qué rechazamos y por qué |
 |---|---|---|---|
-| 1 | <> | <> | <> |
-
+| 1 | <¿Cómo podemos saber si un estudiante realmente aprendió o simplemente consiguió la respuesta correcta?> | <Evaluar cuatro dimensiones: comprensión conceptual, aplicación práctica, justificación del razonamiento y autonomía.> | <Utilizar únicamente la cantidad de respuestas correctas, porque no demuestra por sí sola que exista un aprendizaje real.> |
+| 2 | <¿Conviene utilizar neuronas o reglas SI-ENTONCES para nuestro sistema?> | <Utilizar reglas SI-ENTONCES como mecanismo principal de decisión, porque son más sencillas de interpretar y permiten identificar dificultades específicas.> | <Entrenar una red neuronal desde cero, porque no contamos con suficientes datos reales y el tiempo del hackathon es limitado.> |
+| 3 | <¿Qué variables deberíamos utilizar para determinar si un alumno domina un tema?> | <Considerar la comprensión, la aplicación, el razonamiento y la autonomía como dimensiones principales.> | <Darle un peso determinante al tiempo de resolución o a la cantidad de pistas solicitadas, porque no son pruebas directas de aprendizaje.> |
+| 4 | <¿Cómo podemos establecer un criterio para decidir si el estudiante puede avanzar?> | <Utilizar un puntaje ponderado con un umbral inicial del 70%, acompañado de un mínimo de 60% en cada dimensión.> | <Permitir avanzar únicamente por alcanzar un promedio general, porque podría ocultar una dificultad importante en alguna dimensión.> |
+| 5 | <¿Cómo calculamos la matriz de confusión y las métricas utilizando los datos de M09.csv?> | <Calcular accuracy, precisión, sensibilidad y especificidad, diferenciando los resultados de entrenamiento y prueba.> | <Considerar que un 100% de accuracy en test significa que el sistema es perfecto, porque solamente se evaluaron seis casos.> |
+| 6 | <¿Qué error sería más perjudicial para nuestro tutor educativo?> | <Priorizar la reducción de falsos positivos, ya que permitir avanzar a un estudiante que todavía no domina los contenidos puede generar dificultades posteriores.> | <Considerar todos los errores igualmente costosos, porque sus consecuencias educativas son diferentes.> |
+| 7 | <¿Contra qué podemos comparar nuestro sistema para saber si funciona mejor?> | <Utilizar un baseline que siempre predice la clase mayoritaria del conjunto de entrenamiento.> | <Comparar el sistema únicamente contra sí mismo, porque no permitiría establecer una referencia de rendimiento> |
+| 8 | <¿Qué medidas podemos implementar para evitar que el sistema tome una decisión equivocada?> | <Incorporar una segunda evaluación con ejercicios nuevos, explicaciones y resolución independiente antes de confirmar el dominio del tema.> | <Dar por aprendido un contenido basándose solamente en una primera evaluación.> |
 **Corridas contra el evaluador**
 
 | Corrida | Nota | Agujero que encontró | Qué cambiamos |
