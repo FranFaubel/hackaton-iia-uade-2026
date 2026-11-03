@@ -4,8 +4,8 @@
 
 **Integrantes:** <Francisco_Faubel> · <Benjamin_Ortiz>
 **IA declarada:** <Chat_GPT>
-**Pista:** <Reglas>
-**Publicación en LinkedIn:** <link>
+**Pista:**<Reglas>
+**Publicación en LinkedIn:**<link>
 
 ---
 
@@ -292,7 +292,7 @@ De esta manera, evitamos que una única puntuación determine el aprendizaje y b
 | 4 | <¿Cómo podemos establecer un criterio para decidir si el estudiante puede avanzar?> | <Utilizar un puntaje ponderado con un umbral inicial del 70%, acompañado de un mínimo de 60% en cada dimensión.> | <Permitir avanzar únicamente por alcanzar un promedio general, porque podría ocultar una dificultad importante en alguna dimensión.> |
 | 5 | <¿Cómo calculamos la matriz de confusión y las métricas utilizando los datos de M09.csv?> | <Calcular accuracy, precisión, sensibilidad y especificidad, diferenciando los resultados de entrenamiento y prueba.> | <Considerar que un 100% de accuracy en test significa que el sistema es perfecto, porque solamente se evaluaron seis casos.> |
 | 6 | <¿Qué error sería más perjudicial para nuestro tutor educativo?> | <Priorizar la reducción de falsos positivos, ya que permitir avanzar a un estudiante que todavía no domina los contenidos puede generar dificultades posteriores.> | <Considerar todos los errores igualmente costosos, porque sus consecuencias educativas son diferentes.> |
-| 7 | <¿Contra qué podemos comparar nuestro sistema para saber si funciona mejor?> | <Utilizar un baseline que siempre predice la clase mayoritaria del conjunto de entrenamiento.> | <Comparar el sistema únicamente contra sí mismo, porque no permitiría establecer una referencia de rendimiento> |
+| 7 | <¿Contra qué podemos comparar nuestro sistema para saber si funciona mejor?> |<Utilizar un baseline que siempre predice la clase mayoritaria del conjunto de entrenamiento>| <Comparar el sistema únicamente contra sí mismo, porque no permitiría establecer una referencia de rendimiento> |
 | 8 | <¿Qué medidas podemos implementar para evitar que el sistema tome una decisión equivocada?> | <Incorporar una segunda evaluación con ejercicios nuevos, explicaciones y resolución independiente antes de confirmar el dominio del tema.> | <Dar por aprendido un contenido basándose solamente en una primera evaluación.> |
 **Corridas contra el evaluador**
 
