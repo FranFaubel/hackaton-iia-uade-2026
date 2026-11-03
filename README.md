@@ -11,14 +11,16 @@
 
 ## 1. Formulación y PEAS
 
-**La pregunta.** <Para cada caso, ¿…? SÍ significa: …>
+**La pregunta.** <¿El estudiante realmente comprendió los conocimientos y es capaz de aplicarlos de manera autónoma, sin depender de herramientas de inteligencia artificial o ayuda externa?
+SÍ significa que el estudiante demuestra comprensión conceptual, puede explicar su razonamiento y resolver ejercicios nuevos sin asistencia externa.
+NO significa que todavía no existen evidencias suficientes de aprendizaje autónomo: puede responder correctamente, pero presenta dificultades para explicar, justificar o aplicar los conocimientos por sí mismo.>
 
-| PEAS | Su sistema |
+| PEAS | Tutor educativo con IA |
 |---|---|
-| Medida de rendimiento | <cómo se sabe si decidió bien> |
-| Entorno | <dónde y con qué decide> |
-| Actuadores | <qué hace con la decisión> |
-| Sensores | <qué datos recibe> |
+| Medida de rendimiento | <Nivel de comprensión conceptual, capacidad de resolver problemas nuevos, justificación del razonamiento, transferencia de conocimientos y retención a largo plazo.> |
+| Entorno | <Plataforma educativa personalizada donde interactúan estudiantes, contenidos, evaluaciones y tutor de IA.> |
+| Actuadores | <Generar ejercicios personalizados, realizar preguntas de seguimiento, solicitar justificaciones, brindar explicaciones y adaptar la dificultad.> |
+| Sensores | <Respuestas, procedimientos, tiempo de resolución, errores, justificaciones, desempeño en evaluaciones sin asistencia y evolución del estudiante.> |
 
 **Objetivo y métrica.** <Qué es lo que de verdad importa en su problema y con qué métrica lo van a medir. ¿Son lo mismo?>
 
