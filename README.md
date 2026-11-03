@@ -11,238 +11,42 @@
 
 ## 1. Formulación y PEAS
 
-**La pregunta.** <¿El estudiante realmente comprendió los conocimientos y es capaz de aplicarlos de manera autónoma, sin depender de herramientas de inteligencia artificial o ayuda externa?
-SÍ significa que el estudiante demuestra comprensión conceptual, puede explicar su razonamiento y resolver ejercicios nuevos sin asistencia externa.
-NO significa que todavía no existen evidencias suficientes de aprendizaje autónomo: puede responder correctamente, pero presenta dificultades para explicar, justificar o aplicar los conocimientos por sí mismo.>
+**La pregunta.** <Para cada estudiante que termina un tema, ¿aprobará la evaluación integradora del tema? SÍ (1) significa predecimos que aprobará; NO (0) significa predecimos que no aprobará. La etiqueta real (1/0) se conoce después y sirve para comprobar si la predicción fue correcta: no entra al sistema al decidir. Una predicción SÍ puede recomendar el avance; una predicción NO, continuar con el tema. La ficha no permite afirmar que predecir la aprobación sea equivalente a medir toda la comprensión autónoma.>
 
 | PEAS | Tutor educativo con IA |
 |---|---|
-| Medida de rendimiento | <Nivel de comprensión conceptual, capacidad de resolver problemas nuevos, justificación del razonamiento, transferencia de conocimientos y retención a largo plazo.> |
-| Entorno | <Plataforma educativa personalizada donde interactúan estudiantes, contenidos, evaluaciones y tutor de IA.> |
-| Actuadores | <Generar ejercicios personalizados, realizar preguntas de seguimiento, solicitar justificaciones, brindar explicaciones y adaptar la dificultad.> |
-| Sensores | <Respuestas, procedimientos, tiempo de resolución, errores, justificaciones, desempeño en evaluaciones sin asistencia y evolución del estudiante.> |
+| Medida de rendimiento | <Priorizar la precisión de las predicciones SÍ y controlar especificidad, por el costo de los falsos positivos; reportar también sensibilidad y exactitud. Comparar contra las etiquetas de la integradora.> |
+| Entorno | <lataforma de tutoría educativa; estudiante que acaba de finalizar un tema y tiene registro de ejercicios recientes..> |
+| Actuadores | <	Emitir SÍ/NO y recomendar avanzar al tema siguiente (SÍ) o permanecer repasando el actual (NO)> |
+| Sensores | <Únicamente el porcentaje de aciertos registrado en los últimos diez ejercicios, disponible antes de la evaluación integradora.> |
 
-**Objetivo y métrica.** <Que el estudiante comprenda y pueda aplicar los conocimientos de manera autónoma, sin depender de una IA para resolver las actividades.No buscamos que simplemente apruebe un ejercicio, sino que pueda demostrar que aprendió.
-La métrica principal de nuestro sistema será el porcentaje de dominio autónomo del contenido, cuyo objetivo es determinar si el estudiante realmente comprendió lo aprendido y si es capaz de aplicarlo sin depender de herramientas externas o de inteligencia artificial.
-
-Para calcularlo, proponemos dividir la evaluación en cuatro dimensiones, asignándoles diferentes ponderaciones según la importancia que tienen para demostrar un aprendizaje real:
-
-Comprensión conceptual (25%): evalúa si el estudiante puede explicar los conceptos con sus propias palabras y demostrar que entiende qué está haciendo. Le asignamos un 25% porque comprender la teoría es la base necesaria para poder aplicar cualquier conocimiento.
-Aplicación práctica (30%): mide la capacidad de resolver ejercicios y situaciones nuevas utilizando los conocimientos adquiridos. Le damos el mayor peso, un 30%, porque consideramos que la verdadera comprensión se demuestra principalmente cuando el alumno puede utilizar lo aprendido en problemas que no conoce previamente.
-Justificación del razonamiento (25%): analiza si el estudiante puede explicar los pasos que siguió, justificar sus decisiones y argumentar por qué llegó a determinado resultado. Le asignamos un 25% porque no alcanza con obtener una respuesta correcta: también es importante comprender el procedimiento que permitió llegar a ella.
-Autonomía (20%): evalúa si el estudiante puede resolver las actividades sin recibir ayuda externa ni utilizar herramientas de IA durante la evaluación. Le asignamos un 20% porque buscamos comprobar que los conocimientos fueron incorporados y que el alumno puede utilizarlos por sus propios medios.
-
-De esta manera, la métrica final se obtiene combinando los resultados de las cuatro dimensiones, dando mayor importancia a la aplicación práctica, sin dejar de lado la comprensión, el razonamiento y la autonomía.>
+**Objetivo y métrica.** <El objetivo real es tomar una buena decisión de avance, evitando especialmente que avance un alumno que no aprobaría la integradora y sin retener innecesariamente a quien sí aprobaría. La métrica prioritaria es precisión: de todos los SÍ pronosticados, cuántos efectivamente aprobaron. La especificidad controla la proporción de NO reales que no fueron aprobados incorrectamente; la sensibilidad señala cuántos SÍ reales detectamos. La exactitud es complementaria y se compara con una línea base. Las métricas no son el objetivo educativo, sino medidas observables de predicción en este conjunto de datos.>
 
 ## 2. El sistema
 
-**Cómo decide.** <Nuestro sistema utiliza un conjunto de reglas SI-ENTONCES para evaluar el aprendizaje del estudiante y determinar qué acciones educativas debe realizar el tutor de inteligencia artificial.
-
-El objetivo no es simplemente comprobar si el alumno respondió correctamente, sino identificar si comprendió los conceptos, puede aplicarlos, justificar sus procedimientos y resolver problemas de manera autónoma.
-
-Para tomar decisiones, el sistema utiliza cuatro variables, cada una con una puntuación de 0 a 100:
-
-Comprensión conceptual: 25%.
-Aplicación práctica: 30%.
-Justificación del razonamiento: 25%.
-Autonomía: 20%.
-
-Estas ponderaciones permiten calcular un indicador general denominado porcentaje de dominio autónomo.
-
-Fórmula del indicador:
-
-Dominio autónomo = (C × 0,25) + (A × 0,30) + (R × 0,25) + (U × 0,20)
-
-Donde:
-
-C: comprensión conceptual.
-A: aplicación práctica.
-R: justificación del razonamiento.
-U: autonomía.
-**¿Cómo obtiene el tutor los puntajes de cada variable?**
-
-Cuando un estudiante termina de estudiar un tema, el tutor realiza una evaluación dividida en cuatro etapas:
-
-1. **Comprensión conceptual (C):** solicita al alumno que explique el concepto con sus propias palabras y que proporcione un ejemplo. Evalúa la precisión y comprensión de la explicación.
-
-2. **Aplicación práctica (A):** presenta dos ejercicios nuevos, diferentes de los utilizados durante la enseñanza, para comprobar si puede aplicar los conocimientos en situaciones distintas.
-
-3. **Justificación del razonamiento (R):** solicita que explique los pasos realizados y justifique por qué eligió ese procedimiento.
-
-4. **Autonomía (U):** presenta una actividad individual sin proporcionar pistas ni explicaciones. Evalúa si puede resolverla por sus propios medios.
-
-### Rúbrica de evaluación (0 a 100 puntos)
-
-El tutor utiliza una escala de cinco niveles para evaluar cada una de las cuatro dimensiones. La IA analiza las respuestas del estudiante y asigna un puntaje según los criterios establecidos.
-
-**Escala general:**
-
-* **0 puntos – Nulo:** no responde o la respuesta es incorrecta y no demuestra conocimientos.
-* **25 puntos – Muy bajo:** demuestra conocimientos mínimos, pero presenta errores fundamentales.
-* **50 puntos – Parcial:** comprende algunos conceptos, pero presenta dificultades importantes para explicarlos o aplicarlos.
-* **75 puntos – Satisfactorio:** demuestra una comprensión adecuada, resuelve correctamente y presenta pequeñas imprecisiones.
-* **100 puntos – Completo:** demuestra dominio del contenido, responde correctamente y justifica sus decisiones sin dificultades.
-
-**Criterios específicos por dimensión:**
-
-**1. Comprensión conceptual (C):**
-
-* 0: No logra explicar el concepto.
-* 25: Reconoce algunos términos, pero no comprende su significado.
-* 50: Explica parcialmente el concepto, con errores importantes.
-* 75: Explica correctamente el concepto con pequeñas imprecisiones.
-* 100: Explica el concepto con claridad, utilizando sus propias palabras y ejemplos correctos.
-
-**2. Aplicación práctica (A):**
-
-* 0: No logra resolver los ejercicios.
-* 25: Identifica algunos elementos, pero no consigue aplicar el procedimiento.
-* 50: Resuelve parcialmente los ejercicios, con errores importantes.
-* 75: Resuelve correctamente la mayoría de las situaciones planteadas.
-* 100: Resuelve correctamente ejercicios nuevos y aplica los conocimientos en diferentes situaciones.
-
-**3. Justificación del razonamiento (R):**
-
-* 0: No puede justificar su respuesta.
-* 25: Menciona pasos aislados sin explicar su relación.
-* 50: Explica parcialmente el procedimiento, pero presenta inconsistencias.
-* 75: Justifica correctamente los pasos realizados, con pequeñas omisiones.
-* 100: Explica de manera clara y coherente cada paso y fundamenta sus decisiones.
-
-**4. Autonomía (U):**
-
-* 0: No puede resolver la actividad sin ayuda.
-* 25: Necesita asistencia constante para avanzar.
-* 50: Resuelve parcialmente con varias pistas o intervenciones del tutor.
-* 75: Resuelve correctamente con una ayuda mínima.
-* 100: Resuelve la actividad de manera independiente, sin pistas ni asistencia.
-
-**Cálculo de los puntajes:**
-
-Se realizan dos actividades por dimensión y se promedian sus resultados para obtener C, A, R y U.
-
-El resultado final se calcula mediante:
-
-Dominio autónomo = (C × 0,25) + (A × 0,30) + (R × 0,25) + (U × 0,20).
-
-**Criterio para avanzar:**
-
-El estudiante obtiene un resultado satisfactorio cuando alcanza al menos 70 puntos en el resultado general y un mínimo de 60 puntos en cada una de las cuatro dimensiones. Si no cumple ambas condiciones, el tutor identifica sus dificultades y genera actividades personalizadas de refuerzo.
-
-
-Cada dimensión recibe un puntaje de 0 a 100 mediante una rúbrica de evaluación. Si se realizan dos actividades por dimensión, se promedian sus calificaciones.
-
-Finalmente, el sistema calcula:
-
-Dominio autónomo = (C × 0,25) + (A × 0,30) + (R × 0,25) + (U × 0,20).
-
-El estudiante puede avanzar cuando obtiene un resultado igual o superior a 70 puntos y ninguna de las cuatro dimensiones está por debajo de 60 puntos. Si no cumple estas condiciones, el tutor identifica las dimensiones más débiles y genera actividades específicas de refuerzo.
-
-
-Las decisiones se toman mediante las siguientes reglas:
-
-Reglas de evaluación:
-
-SI el dominio autónomo es igual o superior al 70% Y las cuatro dimensiones tienen al menos 60 puntos, ENTONCES el estudiante demuestra un nivel suficiente de comprensión y puede avanzar al siguiente contenido.
-SI la comprensión conceptual es inferior a 60 puntos, ENTONCES el tutor debe ofrecer explicaciones alternativas, ejemplos y material de apoyo.
-SI la aplicación práctica es inferior a 60 puntos, ENTONCES el tutor debe generar ejercicios progresivos para que el estudiante aprenda a utilizar los conocimientos adquiridos.
-SI la justificación del razonamiento es inferior a 60 puntos, ENTONCES el tutor debe realizar preguntas de seguimiento para que el alumno explique los procedimientos y decisiones que tomó.
-SI la autonomía es inferior a 60 puntos, ENTONCES el tutor debe proponer actividades de resolución independiente, reduciendo progresivamente las ayudas y pistas.
-SI el estudiante no alcanza el 70% de dominio autónomo, ENTONCES debe continuar trabajando sobre los contenidos que presentan dificultades antes de avanzar.
-
-Las reglas pueden activarse simultáneamente cuando el estudiante presenta dificultades en más de una dimensión.
-
-De esta manera, el sistema no solamente determina si el alumno comprendió el contenido, sino que identifica qué necesita mejorar y selecciona la estrategia educativa más adecuada.>
-
-**Variables que usa y por qué.** <Nuestro sistema utiliza cuatro variables principales:
-
-1. Comprensión conceptual (25%)
-
-Evalúa si el estudiante entiende los conceptos y puede explicarlos con sus propias palabras. Permite identificar si realmente comprendió la teoría o simplemente memorizó una respuesta.
-
-2. Aplicación práctica (30%)
-
-Evalúa si puede utilizar los conocimientos adquiridos para resolver ejercicios nuevos y situaciones diferentes de las que ya practicó. Le asignamos la mayor ponderación porque consideramos que la capacidad de aplicar lo aprendido es una de las evidencias más importantes de comprensión.
-
-3. Justificación del razonamiento (25%)
-
-Analiza si puede explicar los pasos que siguió, justificar sus decisiones y comprender por qué llegó a determinado resultado. Permite diferenciar entre obtener una respuesta correcta y comprender el procedimiento utilizado.
-
-4. Autonomía (20%)
-
-Evalúa si puede resolver actividades por sus propios medios, sin recibir pistas ni asistencia durante las evaluaciones de comprobación. Permite determinar si incorporó los conocimientos y puede utilizarlos independientemente del tutor.
-
-Variables descartadas:
-
-Tiempo de resolución: cada estudiante tiene su propio ritmo y tardar más no significa necesariamente comprender menos.
-Ortografía y redacción: no determinan necesariamente el dominio del contenido.
-Cantidad de respuestas correctas: no demuestra por sí sola que exista comprensión real.
-Estilo de escritura: no permite determinar de manera confiable si una respuesta fue generada por IA.
-
-**Relación entre los datos disponibles y el objetivo del sistema**
-
-Es importante distinguir el funcionamiento del tutor educativo de la evaluación realizada con M09.csv.
-
-En el funcionamiento final del tutor, la decisión de avance se determina mediante las cuatro dimensiones: comprensión conceptual (C), aplicación práctica (A), razonamiento (R) y autonomía (U).
-
-Sin embargo, M09.csv no contiene esas cuatro variables. Por este motivo, para realizar la evaluación cuantitativa utilizamos Accuracy como variable proxy, estableciendo un umbral del 70% para predecir SÍ o NO.
-
-Por lo tanto, las matrices de confusión y las métricas obtenidas evalúan esta regla simplificada, pero no demuestran por sí solas el rendimiento del sistema completo basado en C, A, R y U.
-
-Para validar el funcionamiento final será necesario recopilar datos que incluyan las cuatro dimensiones y sus resultados reales.
-### Control de consistencia de la rúbrica
-
-Para reducir las diferencias entre evaluaciones, el tutor utiliza una rúbrica con criterios y niveles de puntuación previamente definidos para cada dimensión.
-
-La IA debe justificar cada puntaje utilizando evidencias concretas de la respuesta del estudiante.
-
-Además, proponemos realizar dos evaluaciones independientes de una misma respuesta utilizando la misma rúbrica. Si ambas asignan el mismo puntaje o presentan una diferencia máxima de 5 puntos, se acepta el resultado promedio. Si la diferencia es superior a 5 puntos, se realiza una tercera evaluación y se revisan los criterios aplicados.
-
-Este mecanismo busca reducir la variabilidad de las correcciones y mejorar la consistencia del sistema.
-
-**Limitación:** este procedimiento es una medida de control propuesta. Todavía no fue comprobado con un conjunto de respuestas evaluadas repetidamente, por lo que será necesario realizar pruebas para medir su consistencia.
-
+**Cómo decide.** <Cómo decide. Es un único clasificador basado en dos reglas, con umbral fijo del 70 %:
+1. SI aciertos >= 70, ENTONCES predecir SÍ (1).
+2. SI aciertos < 70, ENTONCES predecir NO (0).
+Cómo elegimos el umbral. El 70 % no fue elegido a ciegas antes de ver las etiquetas. Se seleccionó durante el diseño, examinando solo los casos 1–14 de entrenamiento, con preferencia por evitar falsos positivos y mantener una regla simple. No hay evidencia de que 70 sea el único valor correcto; por ejemplo, 69 %, 70 % y 75 % dan la misma matriz de entrenamiento en estos datos. No ajustamos el umbral utilizando los casos 15–20 de prueba. La comparación siguiente es una comprobación de sensibilidad del umbral, no una razón para seguir ajustándolo después de ver la prueba.
+Umbral	VP / FN / FP / VN en entrenamiento	Exactitud de entrenamiento	Comentario
+65 %	4 / 0 / 2 / 8	85,71 %	Detecta todos los SÍ, pero produce 2 falsos positivos.
+67 %	4 / 0 / 1 / 9	92,86 %	Reduce a 1 falso positivo.
+70 %	3 / 1 / 0 / 10	92,86 %	No tiene falsos positivos; sacrifica un SÍ real.
+75 %	3 / 1 / 0 / 10	92,86 %	Mismo resultado aquí; no demuestra superioridad.
+80 %	3 / 1 / 0 / 10	92,86 %	Mismo resultado en entrenamiento, aunque puede cambiar con otros casos.>
+
+**Variables que usa y por qué.** <Utiliza aciertos (%): es una señal de rendimiento reciente, está disponible antes de decidir y se puede aplicar igual a un caso nuevo. Descartamos pistas solicitadas, tiempo por ejercicio y temas avanzados en la semana: no intervienen en esta regla. El número de temas avanzados es especialmente riesgoso como métrica de éxito porque puede premiar avanzar sin aprender. Nunca utilizamos el resultado real como entrada: hacerlo sería fuga de información. Tampoco afirmamos que el porcentaje de aciertos mida directamente la comprensión autónoma.
 >
 
 
-**Cómo se corre en vivo.** <El sistema funciona mediante un ciclo de enseñanza, evaluación y retroalimentación.
-
-Paso 1. Diagnóstico inicial
-
-El tutor presenta preguntas y ejercicios para identificar los conocimientos previos y las dificultades del estudiante.
-
-Paso 2. Enseñanza personalizada
-
-La inteligencia artificial explica los conceptos, proporciona ejemplos y propone actividades adaptadas al nivel de conocimiento del alumno.
-
-Paso 3. Práctica guiada
-
-El estudiante resuelve ejercicios y recibe correcciones, explicaciones y pistas cuando las necesita.
-
-Paso 4. Evaluación de comprensión
-
-El tutor presenta problemas nuevos y solicita explicaciones para comprobar si el estudiante puede aplicar y justificar lo aprendido.
-
-Paso 5. Evaluación de autonomía
-
-Se realiza una actividad de comprobación sin asistencia del tutor ni herramientas externas, para obtener evidencias de que el alumno puede resolver por sus propios medios.
-
-Paso 6. Aplicación de reglas
-
-El sistema asigna una puntuación a cada una de las cuatro dimensiones, calcula el porcentaje de dominio autónomo y evalúa las condiciones establecidas.
-
-Paso 7. Retroalimentación y adaptación
-
-Según las reglas que se activen, el tutor decide si el estudiante puede avanzar o si necesita reforzar determinados conocimientos.
-
-Este proceso se repite hasta que el alumno demuestra un nivel suficiente de comprensión y autonomía.>
+**Cómo se corre en vivo.** <En Colab, Python o manualmente: (1) leer el porcentaje de aciertos; (2) compararlo contra 70; (3) devolver SÍ si es mayor o igual, NO en caso contrario. Archivo: m09_reglas_final.py. Ejemplo: python m09_reglas_final.py --aciertos 68. Para varios casos: python m09_reglas_final.py --lista 68,70,81,42. Para auditar el conjunto oficial: python m09_reglas_final.py --auditar. Es posible resolverlo a mano sin ninguna herramienta.>
 
 **Dos casos de ejemplo.**
 
-| Caso inventado | Valores(C, A, R, U) | Salida del sistema |
+| Caso inventado | Valores | Salida del sistema |
 |---|---|---|
-| Estudiante que comprende los conceptos, resuelve ejercicios nuevos, justifica sus procedimientos y trabaja de manera autónoma. | <C: 85, A: 90, R: 80, U: 85. Dominio: 85,25%.> | <SÍ. Demuestra un nivel suficiente de comprensión y puede avanzar> |
-| Estudiante que conoce los conceptos, pero tiene dificultades para aplicarlos y justificar sus procedimientos. | <C: 80, A: 45, R: 50, U: 85. Dominio: 63%.> | <NO. Necesita reforzar la aplicación práctica y el razonamiento.> |
+| <A> |<Aciertos=70%> | <SÍ (el límite se incluye)> |
+| <B> | <Aciertos 69%> | <NO (está por debajo del límite)> |
 
 ## 3. Medición
 
@@ -267,180 +71,57 @@ Este proceso se repite hasta que el alumno demuestra un nivel suficiente de comp
 | Sensibilidad | <75%> | <100%> |
 | Especificidad | <100%> | <100%> |
 
-**Entrenamiento contra prueba.** <Al comparar los resultados del entrenamiento con los de prueba, observamos que el sistema obtiene un 92,86% de exactitud durante el entrenamiento y un 100% en los casos de prueba.
+Comprobación: 4 + 0 + 0 + 2 = 6.
+Métrica	Entrenamiento	Prueba
+Exactitud = (VP+VN)/total	13/14 = 92,86 %	6/6 = 100 %
+Precisión = VP/(VP+FP)	3/3 = 100 %	4/4 = 100 %
+Sensibilidad = VP/(VP+FN)	3/4 = 75 %	4/4 = 100 %
+Especificidad = VN/(VN+FP)	10/10 = 100 %	2/2 = 100 %
 
-Esto significa que el sistema logra clasificar correctamente todos los casos que no utilizó para establecer su funcionamiento.
+**Entrenamiento contra prueba.** <La exactitud de prueba supera la de entrenamiento en 7,14 puntos porcentuales. No hay caída observada en los seis casos de prueba, pero esto no permite concluir que no exista sobreajuste ni que la generalización esté garantizada: el conjunto de prueba es muy pequeño y tiene una proporción de positivos diferente (4/6, frente a 4/14 en entrenamiento). La regla comete un FN en el caso 3, que aprueba con 67 % de aciertos. No corregimos el umbral en función de ese caso de prueba ni de los resultados de prueba.
 
-No observamos indicios de sobreajuste, ya que el rendimiento no disminuye al evaluar casos nuevos. Por el contrario, mejora respecto del entrenamiento, lo que representa una primera evidencia favorable de generalización.
+Sensibilidad del umbral fuera del entrenamiento (solo análisis descriptivo, sin cambiar la regla). Con 70 %, en prueba se obtienen 4 VP, 0 FN, 0 FP y 2 VN. Si lo bajáramos a 65 %, aparecería 1 FP en prueba (caso 19); si lo subiéramos a 80 %, aparecería 1 FN (caso 17). Por eso el rendimiento del 70 % no demuestra que cualquier otro umbral funcione igual, ni que el valor sea universal.> 
 
-Sin embargo, debemos considerar que el conjunto de prueba contiene solamente seis casos, por lo que no podemos garantizar que estos resultados se mantengan con una cantidad mayor de estudiantes.
-
-Durante el entrenamiento se produjo un falso negativo en el caso 3. Este estudiante obtuvo un 67% de aciertos, pero su resultado real era SÍ. Al no alcanzar el umbral del 70%, nuestro sistema lo clasificó incorrectamente como NO.
-
-Este caso demuestra una de las limitaciones de utilizar únicamente el porcentaje de aciertos: un estudiante puede comprender un tema aunque no alcance exactamente el umbral establecido.
-
-Conclusión:
-
-Los resultados muestran que nuestro sistema tiene un buen desempeño inicial para clasificar el rendimiento de los estudiantes. Sin embargo, el porcentaje de aciertos no garantiza por sí solo que exista una comprensión real de los conocimientos.
-
-Por este motivo, nuestro tutor incorpora una segunda instancia de evaluación, en la que la inteligencia artificial analiza la comprensión conceptual, la aplicación práctica, la justificación del razonamiento y la autonomía.
-
-De esta manera, buscamos que el sistema no confunda una respuesta correcta con un aprendizaje verdaderamente adquirido.
-
-Si bien el sistema obtuvo un 100% en todas las métricas del conjunto de prueba, este resultado debe interpretarse con cautela debido a que solamente contamos con seis casos. Además, los datos presentan una separación relativamente clara respecto del umbral de clasificación establecido. Por lo tanto, este resultado no garantiza que el sistema mantenga el mismo rendimiento ante una muestra más amplia y diversa. Será necesario realizar nuevas pruebas con estudiantes reales para evaluar su capacidad de generalización.
-### C. Medición
-
-**¿Qué significa SÍ y NO en nuestro sistema?**
-
-En nuestro proyecto, SÍ significa que el estudiante aprobó la evaluación integradora y demostró dominio autónomo del contenido. Para ello, debe obtener un puntaje general igual o superior a 70 puntos y alcanzar al menos 60 puntos en cada una de las cuatro dimensiones: comprensión conceptual (C), aplicación práctica (A), justificación del razonamiento (R) y autonomía (U).
-
-NO significa que todavía no existe evidencia suficiente de dominio autónomo y que el estudiante necesita reforzar alguna dimensión.
-
-Por lo tanto, tener un 70% de aciertos en ejercicios anteriores no significa necesariamente que el estudiante haya aprobado la evaluación integradora.
-
-**¿Cómo se utilizaron los datos de M09.csv?**
-
-El archivo M09.csv no contiene las cuatro dimensiones C, A, R y U. Por este motivo, para realizar la evaluación cuantitativa utilizamos Accuracy (porcentaje de respuestas correctas en los últimos diez ejercicios) como variable de referencia y establecimos una regla simplificada:
-
-* Si Accuracy es mayor o igual al 70%, el sistema predice SÍ.
-* Si Accuracy es menor al 70%, el sistema predice NO.
-
-Esta regla se utilizó exclusivamente para construir las matrices de confusión y calcular las métricas de entrenamiento y prueba.
-
-**Diferencia entre la regla simplificada y el objetivo final**
-
-La regla basada en Accuracy no representa la decisión definitiva del tutor. El objetivo final es determinar si el estudiante realmente aprendió, utilizando las cuatro dimensiones C, A, R y U mediante una evaluación integradora.
-
-Por ejemplo, un estudiante puede tener un 67% de aciertos en los ejercicios anteriores y, aun así, aprobar la evaluación integradora si demuestra suficiente comprensión, aplicación, razonamiento y autonomía.
-
-En ese caso, el resultado correcto sería SÍ, aunque la regla simplificada basada en Accuracy prediga NO.
-
-**Uso de las demás variables de M09.csv**
-
-* Hints requested (pistas solicitadas): se utiliza para identificar cuánto acompañamiento necesita el estudiante.
-* Time per exercise (tiempo por ejercicio): permite observar el ritmo de resolución y adaptar la dificultad.
-* Topics advanced (temas avanzados): se utiliza para registrar el progreso semanal y mostrarlo al estudiante y a sus padres.
-
-Estas variables ayudan a personalizar la enseñanza, pero no determinan por sí solas si el estudiante domina un contenido.
-
-**Limitación de la evaluación**
-
-Las matrices de confusión y las métricas obtenidas con M09.csv evalúan únicamente la regla simplificada basada en Accuracy ≥ 70%. No permiten validar directamente el funcionamiento completo del tutor basado en C, A, R y U.
-
-Para validar el sistema final será necesario recopilar nuevos datos que incluyan los puntajes de las cuatro dimensiones y los resultados reales de las evaluaciones integradoras.
-
-### Evidencia de la relación entre Accuracy y la evaluación integradora
-
-Para analizar si Accuracy puede funcionar como una variable de referencia para predecir la aprobación de la evaluación integradora, comparamos las predicciones del sistema con los resultados reales registrados en M09.csv.
-
-Utilizando un umbral del 70%, obtuvimos:
-
-* Entrenamiento: 13 de 14 predicciones correctas (92,86%).
-* Prueba: 6 de 6 predicciones correctas (100%).
-* Total: 19 de 20 predicciones correctas (95%).
-
-Estos resultados muestran una coincidencia elevada entre las predicciones basadas en Accuracy y las etiquetas reales del conjunto de datos.
-
-Sin embargo, esta coincidencia constituye evidencia preliminar y no demuestra que Accuracy mida directamente la comprensión o el dominio autónomo del estudiante. Además, el conjunto de prueba contiene solamente seis casos, por lo que no podemos asegurar que el rendimiento se mantenga con nuevos estudiantes.
-
-Por este motivo, consideramos Accuracy una variable de referencia para una primera aproximación, pero no una sustitución de la evaluación integradora basada en comprensión conceptual, aplicación práctica, razonamiento y autonomía.
-
-Para comprobar la relación de manera más confiable, necesitamos recopilar nuevos casos en los que cada estudiante tenga tanto su porcentaje de aciertos como el resultado de una evaluación integradora independiente.
-
->
 
 ## 4. El error más caro
 
-<¿Qué es peor: el falso positivo o el falso negativo?
+<4. El error más caro
+Priorizamos el falso positivo (FP): el tutor pronostica SÍ, pero el estudiante no aprueba la integradora. Según la ficha, hacerlo avanzar sin dominio puede acumular vacíos de conocimiento que se manifiesten en evaluaciones posteriores. Un FN también es perjudicial: retiene a quien sí podría aprobar, con riesgo de aburrimiento y abandono. La ficha no asigna costos numéricos, por lo que nuestra prioridad es una decisión explícita del equipo, no una equivalencia estadística demostrada.
 
-En nuestro tutor educativo, el falso positivo ocurre cuando el sistema considera que un estudiante comprendió un tema, cuando en realidad todavía no lo domina.
+Qué cambiamos para reducir FP. Comparamos una regla inicial aciertos >= 65 con la regla definitiva aciertos >= 70 usando solo entrenamiento:
+Resultado (entrenamiento)	Umbral 65 %	Umbral 70 %
+VP	4	3
+FN	0	1
+FP	2 (casos 9 y 14)	0
+VN	8	10
 
-El falso negativo ocurre cuando el sistema considera que un estudiante no comprendió un tema, aunque realmente sí lo haya aprendido.
 
-Consideramos que el falso positivo es más perjudicial, por las siguientes razones:
-
-El estudiante puede avanzar a contenidos nuevos sin tener los conocimientos necesarios.
-Puede acumular dificultades que afecten su aprendizaje futuro.
-La plataforma puede mostrarles a los padres que el estudiante avanzó de tema, generando una percepción equivocada de su progreso.
-El tutor deja de ofrecerle herramientas de refuerzo cuando todavía las necesita.
-
-En cambio, un falso negativo puede provocar que un estudiante que sí comprendió tenga que realizar ejercicios adicionales o repetir una explicación. Aunque esto puede generar frustración y pérdida de tiempo, no implica necesariamente que avance con conocimientos incompletos.
-
-¿Qué cambiamos en el sistema para cometer menos ese error?
-
-Incorporamos una segunda instancia de evaluación antes de permitir que el estudiante avance de tema.
-
-A partir de ahora, no alcanza con obtener un 70% de aciertos para considerar que comprendió.
-
-El tutor deberá:
-
-Presentar un ejercicio nuevo que evalúe el mismo concepto.
-Solicitar que el estudiante explique cómo llegó al resultado.
-Comprobar si puede aplicar el conocimiento en una situación diferente.
-Realizar una actividad de resolución autónoma, sin pistas ni asistencia.
-
-Nueva regla SI-ENTONCES:
-
-SI el estudiante obtiene al menos un 70% de aciertos, PERO no demuestra comprensión, aplicación y razonamiento en la evaluación complementaria, ENTONCES el sistema no confirma el dominio del tema y propone actividades de refuerzo.
-
-SI supera ambas instancias, ENTONCES el sistema considera que existen evidencias suficientes para avanzar.
-
-Conclusión
-
-Priorizamos reducir los falsos positivos porque nuestro objetivo es garantizar que el estudiante adquiera conocimientos sólidos antes de avanzar hacia nuevos contenidos. Preferimos que el tutor solicite una comprobación adicional antes que considerar aprendido un tema que el alumno todavía no domina.>
+Subir el umbral a 70 % elimina dos falsos positivos en entrenamiento, a cambio de un falso negativo adicional (caso 3). Este intercambio es consciente y coincide con nuestra prioridad declarada. No garantiza cero FP en estudiantes nuevos.>
 
 ## 5. ¿Comparado contra qué?
 
-**Línea base trivial.** <Para establecer una comparación, utilizamos una línea base trivial que consiste en un sistema que siempre predice la categoría más frecuente del conjunto de entrenamiento.
+**Línea base trivial.** <Línea base trivial: predecir siempre NO, porque NO es la clase mayoritaria de entrenamiento (10 de 14). Esa política se fija usando entrenamiento y se aplica sin cambios a prueba.
+Métrica de referencia	Línea base: siempre NO	Nuestra regla del 70 %
+Exactitud entrenamiento	10/14 = 71,43 %	13/14 = 92,86 %
+Exactitud prueba	2/6 = 33,33 %	6/6 = 100 %
+Sensibilidad entrenamiento	0 %	75 %
+Sensibilidad prueba	0 %	100 %
 
-En nuestro caso, de los 14 casos de entrenamiento, 10 tienen resultado real NO y 4 tienen resultado real SÍ. Por lo tanto, la línea base consiste en responder siempre NO.
 
-Este sistema obtiene una exactitud del 71,43% en entrenamiento. Al aplicarlo sobre los seis casos de prueba, obtiene solamente un 33,33% de exactitud, ya que cuatro de los seis estudiantes tienen resultado real SÍ.
-
-En comparación, nuestro sistema obtiene un 92,86% de exactitud en entrenamiento y un 100% en prueba.
-
-Esto demuestra que nuestro sistema supera la estrategia trivial y que las reglas de clasificación aportan información útil para tomar decisiones.>
+En la línea base la precisión es indefinida, porque nunca predice SÍ. La mejora en exactitud es de 21,43 puntos en entrenamiento y 66,67 puntos en prueba. Esa comparación no prueba éxito educativo general: mide la clasificación de estos casos..>
 
 | Checklist (Clase 6) | Respuesta |
 |---|---|
-| ¿Qué datos? | <Los 20 casos proporcionados en el archivo M09.csv, divididos en 14 casos de entrenamiento y 6 de prueba.> |
-| ¿Qué métrica? | <Exactitud, complementada con precisión, sensibilidad y especificidad.> |
-| ¿Comparado contra qué? | <Una línea base trivial que siempre predice la categoría más frecuente del entrenamiento (NO), obteniendo 71,43% de exactitud en entrenamiento y 33,33% en prueba.> |
-| ¿Quién lo midió? | <Nuestro equipo, aplicando las reglas de clasificación a los datos proporcionados y comparando las predicciones con los resultados reales de cada caso.> |
+| ¿Qué datos? | <20 casos ficticios de M09; 14 para diseñar la regla y 6 reservados para prueba. Variables disponibles en la ficha, pero el clasificador solo usa aciertos.> |
+| ¿Qué métrica? | <Prioridad a precisión y control de FP, más especificidad, sensibilidad y exactitud.> |
+| ¿Comparado contra qué? | <Línea base fija siempre NO (71,43 % de exactitud en entrenamiento y 33,33 % en prueba).> |
+| ¿Quién lo midió? | Cálculos reproducibles realizados con asistencia de ChatGPT a partir de la ficha proporcionada; deben ser comprobados y defendidos por Francisco Faubel y Benjamin Ortiz. No afirmamos validación externa o nota del evaluador que no tengamos.> |
 
 ## 6. Riesgo: el camino completo
 
-<Nuestro tutor educativo utiliza un proceso que comienza con la recopilación de datos del estudiante y termina con una decisión que puede influir directamente en su aprendizaje.
+<Datos → modelo → decisión → consecuencia. Se observa el porcentaje de aciertos de los últimos diez ejercicios → se aplica la regla SI–ENTONCES del 70 % → se predice SÍ/NO para aprobación de la integradora y se recomienda avanzar o continuar practicando → el alumno puede avanzar bien, ser retenido pese a poder aprobar (FN) o avanzar sin estar listo (FP).
 
-1. Datos
-
-El sistema recibe información sobre el porcentaje de aciertos, las pistas solicitadas, el tiempo utilizado por ejercicio y los temas avanzados durante la semana.
-
-Riesgo: los datos pueden ser insuficientes para determinar si el estudiante realmente comprendió un contenido. Por ejemplo, obtener un porcentaje elevado de respuestas correctas no garantiza que pueda explicar o aplicar los conocimientos por sus propios medios.
-
-2. Modelo
-
-El sistema utiliza reglas SI-ENTONCES para interpretar los resultados y clasificar el nivel de aprendizaje del estudiante.
-
-Riesgo: las reglas pueden simplificar demasiado el proceso de aprendizaje. Un umbral fijo del 70% podría clasificar incorrectamente a un estudiante que comprende el tema, pero cometió algunos errores durante la evaluación.
-
-3. Decisión
-
-A partir de la clasificación, el tutor determina si el estudiante puede avanzar o necesita reforzar determinados conocimientos.
-
-Riesgo: un falso positivo podría hacer que el estudiante avance sin haber adquirido los conocimientos necesarios, mientras que un falso negativo podría obligarlo a repetir contenidos que ya domina.
-
-4. Consecuencia
-
-La decisión afecta el recorrido educativo del estudiante y también la información sobre su progreso que reciben sus padres.
-
-Riesgo: una clasificación incorrecta puede generar dificultades en contenidos posteriores, frustración en el estudiante y una percepción equivocada de su evolución académica por parte de los padres.
-
-¿Cómo reducimos estos riesgos?
-
-Incorporamos una segunda instancia de evaluación antes de confirmar que un tema fue aprendido. En ella, el tutor presenta ejercicios nuevos, solicita explicaciones sobre los procedimientos y comprueba si el estudiante puede aplicar los conocimientos de manera autónoma.
-
-De esta manera, evitamos que una única puntuación determine el aprendizaje y buscamos que las decisiones del sistema estén respaldadas por distintas evidencias.>
+Riesgo concreto: la plataforma muestra a los padres cuántos temas avanzó el estudiante semanalmente. Si se optimizara esa cifra, podría premiarse avanzar rápido en lugar de aprender. Por eso no la usamos ni como entrada del clasificador ni como métrica de éxito. Otro riesgo es que los aciertos en ejercicios recientes no reflejen toda la preparación para la integradora: el caso 3 evidencia ese límite. Los resultados no justifican afirmar que el tutor mide la comprensión autónoma>
 
 ## 7. Bitácora
 
@@ -448,14 +129,12 @@ De esta manera, evitamos que una única puntuación determine el aprendizaje y b
 
 | # | Qué le pedimos | Qué aceptamos | Qué rechazamos y por qué |
 |---|---|---|---|
-| 1 | <¿Cómo podemos saber si un estudiante realmente aprendió o simplemente consiguió la respuesta correcta?> | <Evaluar cuatro dimensiones: comprensión conceptual, aplicación práctica, justificación del razonamiento y autonomía.> | <Utilizar únicamente la cantidad de respuestas correctas, porque no demuestra por sí sola que exista un aprendizaje real.> |
-| 2 | <¿Conviene utilizar neuronas o reglas SI-ENTONCES para nuestro sistema?> | <Utilizar reglas SI-ENTONCES como mecanismo principal de decisión, porque son más sencillas de interpretar y permiten identificar dificultades específicas.> | <Entrenar una red neuronal desde cero, porque no contamos con suficientes datos reales y el tiempo del hackathon es limitado.> |
-| 3 | <¿Qué variables deberíamos utilizar para determinar si un alumno domina un tema?> | <Considerar la comprensión, la aplicación, el razonamiento y la autonomía como dimensiones principales.> | <Darle un peso determinante al tiempo de resolución o a la cantidad de pistas solicitadas, porque no son pruebas directas de aprendizaje.> |
-| 4 | <¿Cómo podemos establecer un criterio para decidir si el estudiante puede avanzar?> | <Utilizar un puntaje ponderado con un umbral inicial del 70%, acompañado de un mínimo de 60% en cada dimensión.> | <Permitir avanzar únicamente por alcanzar un promedio general, porque podría ocultar una dificultad importante en alguna dimensión.> |
-| 5 | <¿Cómo calculamos la matriz de confusión y las métricas utilizando los datos de M09.csv?> | <Calcular accuracy, precisión, sensibilidad y especificidad, diferenciando los resultados de entrenamiento y prueba.> | <Considerar que un 100% de accuracy en test significa que el sistema es perfecto, porque solamente se evaluaron seis casos.> |
-| 6 | <¿Qué error sería más perjudicial para nuestro tutor educativo?> | <Priorizar la reducción de falsos positivos, ya que permitir avanzar a un estudiante que todavía no domina los contenidos puede generar dificultades posteriores.> | <Considerar todos los errores igualmente costosos, porque sus consecuencias educativas son diferentes.> |
-| 7 | <¿Contra qué podemos comparar nuestro sistema para saber si funciona mejor?> |<Utilizar un baseline que siempre predice la clase mayoritaria del conjunto de entrenamiento>| <Comparar el sistema únicamente contra sí mismo, porque no permitiría establecer una referencia de rendimiento> |
-| 8 | <¿Qué medidas podemos implementar para evitar que el sistema tome una decisión equivocada?> | <Incorporar una segunda evaluación con ejercicios nuevos, explicaciones y resolución independiente antes de confirmar el dominio del tema.> | <Dar por aprendido un contenido basándose solamente en una primera evaluación.> |
+| 1| <Comparar Neurona, Reglas y Agente para M09> | <Pista Reglas: decisión clara y reproducible> | <Añadir complejidad no necesaria para una clasificación binaria con pocos datos.> |
+| 2 | <Diseñar y probar reglas con los casos M09.> | <Un solo clasificador que utiliza aciertos, con umbral fijo> | <Usar como entrada la etiqueta real; sería fuga de información.> |
+| 3 | <Calcular matrices, métricas y línea base.	> | <Recuento separado de 14/6 y referencia siempre NO> | <Presentar el 100 % en seis casos de prueba como garantía de generalización.> |
+| 4 | <Revisar el error más caro.> | <Comparar umbrales en entrenamiento y mostrar FP frente a FN> | <Ocultar el FN del caso 3 o afirmar que todos los errores cuestan lo mismo.> |
+| 5 | <Corregir las objeciones del evaluador de las corridas 1–4.	> | <Un único sistema medido y ejecutable (aciertos >= 70)> | <justificación honesta de selección del umbral y sensibilidad a moverlo.> |
+
 **Corridas contra el evaluador**
 
 | Corrida | Nota | Agujero que encontró | Qué cambiamos |
@@ -463,5 +142,7 @@ De esta manera, evitamos que una única puntuación determine el aprendizaje y b
 | 1 | <6> | <El sistema plantea evaluar cuatro dimensiones (C, A, R y U), pero los datos de M09.csv no contienen esas variables. En las matrices de confusión se utilizó realmente la variable Accuracy, con un umbral del 70%, para decidir entre SÍ y NO. Por lo tanto, el criterio utilizado para medir los resultados no coincide completamente con el objetivo planteado para el tutor. También falta explicar cómo se obtienen los puntajes C, A, R y U para un estudiante nuevo.> | <Aclaramos que las matrices y métricas calculadas corresponden a una clasificación basada exclusivamente en Accuracy ≥ 70%. Diferenciamos ese criterio inicial del objetivo final del tutor, que es evaluar el dominio autónomo. Incorporaremos un procedimiento concreto de evaluación para obtener C, A, R y U mediante actividades y preguntas específicas. También registramos la necesidad de realizar nuevas corridas contra el evaluador.> |
 | 2 | <6> | <Reconocen que las matrices miden solo Accuracy ≥ 70%, no el sistema con C, A, R y U. Entonces, ¿qué significa SÍ en su tabla: aprobar la evaluación integradora o tener 70% de aciertos? ¿Qué pasa con un alumno que aprueba la integradora pero tiene 67% de aciertos?
 > | <Definimos una rúbrica de cinco niveles, establecimos los criterios de evaluación de cada dimensión y diferenciamos la regla simplificada del objetivo final. También aclaramos el uso de las pistas, el tiempo y los temas avanzados.> |
-| 3 | <6> | <No se presentó evidencia suficiente de que Accuracy represente la aprobación de la evaluación integradora. Además, faltaba explicar cómo se controla la consistencia de las correcciones de la IA. La bitácora tampoco incluía la segunda corrida.> | <Incorporamos el análisis de coincidencia entre las predicciones y las etiquetas reales, explicitamos las limitaciones de los datos, propusimos un mecanismo de control de consistencia de la rúbrica y completamos el registro de las corridas anteriores.> |
+| 3 | <6> | <No se presentó evidencia suficiente de que Accuracy represente la aprobación de la evaluación integradora. Además, faltaba explicar cómo se controla la consistencia de las correcciones de la IA. La bitácora tampoco incluía la segunda corrida.> | <Incorporamos el análisis de coincidencia entre las predicciones y las etiquetas reales, explicitamos las limitaciones de los datos, propusimos un mecanismo de control de consistencia de la rúbrica y completamos el registro de las corridas anteriores.
+| 4 | <10> | <En la mesa, cambiá un caso (un alumno con 70% que no aprobó). ¿Cuánto les lleva recalcular precisión y especificidad sin IA y sin el script?
+> | <.> |
 
