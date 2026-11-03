@@ -22,7 +22,17 @@ NO significa que todavía no existen evidencias suficientes de aprendizaje autó
 | Actuadores | <Generar ejercicios personalizados, realizar preguntas de seguimiento, solicitar justificaciones, brindar explicaciones y adaptar la dificultad.> |
 | Sensores | <Respuestas, procedimientos, tiempo de resolución, errores, justificaciones, desempeño en evaluaciones sin asistencia y evolución del estudiante.> |
 
-**Objetivo y métrica.** <Qué es lo que de verdad importa en su problema y con qué métrica lo van a medir. ¿Son lo mismo?>
+**Objetivo y métrica.** <Que el estudiante comprenda y pueda aplicar los conocimientos de manera autónoma, sin depender de una IA para resolver las actividades.No buscamos que simplemente apruebe un ejercicio, sino que pueda demostrar que aprendió.
+La métrica principal de nuestro sistema será el porcentaje de dominio autónomo del contenido, cuyo objetivo es determinar si el estudiante realmente comprendió lo aprendido y si es capaz de aplicarlo sin depender de herramientas externas o de inteligencia artificial.
+
+Para calcularlo, proponemos dividir la evaluación en cuatro dimensiones, asignándoles diferentes ponderaciones según la importancia que tienen para demostrar un aprendizaje real:
+
+Comprensión conceptual (25%): evalúa si el estudiante puede explicar los conceptos con sus propias palabras y demostrar que entiende qué está haciendo. Le asignamos un 25% porque comprender la teoría es la base necesaria para poder aplicar cualquier conocimiento.
+Aplicación práctica (30%): mide la capacidad de resolver ejercicios y situaciones nuevas utilizando los conocimientos adquiridos. Le damos el mayor peso, un 30%, porque consideramos que la verdadera comprensión se demuestra principalmente cuando el alumno puede utilizar lo aprendido en problemas que no conoce previamente.
+Justificación del razonamiento (25%): analiza si el estudiante puede explicar los pasos que siguió, justificar sus decisiones y argumentar por qué llegó a determinado resultado. Le asignamos un 25% porque no alcanza con obtener una respuesta correcta: también es importante comprender el procedimiento que permitió llegar a ella.
+Autonomía (20%): evalúa si el estudiante puede resolver las actividades sin recibir ayuda externa ni utilizar herramientas de IA durante la evaluación. Le asignamos un 20% porque buscamos comprobar que los conocimientos fueron incorporados y que el alumno puede utilizarlos por sus propios medios.
+
+De esta manera, la métrica final se obtiene combinando los resultados de las cuatro dimensiones, dando mayor importancia a la aplicación práctica, sin dejar de lado la comprensión, el razonamiento y la autonomía.>
 
 ## 2. El sistema
 
