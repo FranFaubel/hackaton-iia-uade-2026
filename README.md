@@ -59,6 +59,26 @@ C: comprensión conceptual.
 A: aplicación práctica.
 R: justificación del razonamiento.
 U: autonomía.
+**¿Cómo obtiene el tutor los puntajes de cada variable?**
+
+Cuando un estudiante termina de estudiar un tema, el tutor realiza una evaluación dividida en cuatro etapas:
+
+1. **Comprensión conceptual (C):** solicita al alumno que explique el concepto con sus propias palabras y que proporcione un ejemplo. Evalúa la precisión y comprensión de la explicación.
+
+2. **Aplicación práctica (A):** presenta dos ejercicios nuevos, diferentes de los utilizados durante la enseñanza, para comprobar si puede aplicar los conocimientos en situaciones distintas.
+
+3. **Justificación del razonamiento (R):** solicita que explique los pasos realizados y justifique por qué eligió ese procedimiento.
+
+4. **Autonomía (U):** presenta una actividad individual sin proporcionar pistas ni explicaciones. Evalúa si puede resolverla por sus propios medios.
+
+Cada dimensión recibe un puntaje de 0 a 100 mediante una rúbrica de evaluación. Si se realizan dos actividades por dimensión, se promedian sus calificaciones.
+
+Finalmente, el sistema calcula:
+
+Dominio autónomo = (C × 0,25) + (A × 0,30) + (R × 0,25) + (U × 0,20).
+
+El estudiante puede avanzar cuando obtiene un resultado igual o superior a 70 puntos y ninguna de las cuatro dimensiones está por debajo de 60 puntos. Si no cumple estas condiciones, el tutor identifica las dimensiones más débiles y genera actividades específicas de refuerzo.
+
 
 Las decisiones se toman mediante las siguientes reglas:
 
@@ -98,7 +118,21 @@ Variables descartadas:
 Tiempo de resolución: cada estudiante tiene su propio ritmo y tardar más no significa necesariamente comprender menos.
 Ortografía y redacción: no determinan necesariamente el dominio del contenido.
 Cantidad de respuestas correctas: no demuestra por sí sola que exista comprensión real.
-Estilo de escritura: no permite determinar de manera confiable si una respuesta fue generada por IA.>
+Estilo de escritura: no permite determinar de manera confiable si una respuesta fue generada por IA.
+
+**Relación entre los datos disponibles y el objetivo del sistema**
+
+Es importante distinguir el funcionamiento del tutor educativo de la evaluación realizada con M09.csv.
+
+En el funcionamiento final del tutor, la decisión de avance se determina mediante las cuatro dimensiones: comprensión conceptual (C), aplicación práctica (A), razonamiento (R) y autonomía (U).
+
+Sin embargo, M09.csv no contiene esas cuatro variables. Por este motivo, para realizar la evaluación cuantitativa utilizamos Accuracy como variable proxy, estableciendo un umbral del 70% para predecir SÍ o NO.
+
+Por lo tanto, las matrices de confusión y las métricas obtenidas evalúan esta regla simplificada, pero no demuestran por sí solas el rendimiento del sistema completo basado en C, A, R y U.
+
+Para validar el funcionamiento final será necesario recopilar datos que incluyan las cuatro dimensiones y sus resultados reales.
+
+>
 
 
 **Cómo se corre en vivo.** <El sistema funciona mediante un ciclo de enseñanza, evaluación y retroalimentación.
@@ -298,4 +332,4 @@ De esta manera, evitamos que una única puntuación determine el aprendizaje y b
 
 | Corrida | Nota | Agujero que encontró | Qué cambiamos |
 |---|---|---|---|
-| 1 | <> | <> | <> |
+| 1 | <6> | <El sistema plantea evaluar cuatro dimensiones (C, A, R y U), pero los datos de M09.csv no contienen esas variables. En las matrices de confusión se utilizó realmente la variable Accuracy, con un umbral del 70%, para decidir entre SÍ y NO. Por lo tanto, el criterio utilizado para medir los resultados no coincide completamente con el objetivo planteado para el tutor. También falta explicar cómo se obtienen los puntajes C, A, R y U para un estudiante nuevo.> | <Aclaramos que las matrices y métricas calculadas corresponden a una clasificación basada exclusivamente en Accuracy ≥ 70%. Diferenciamos ese criterio inicial del objetivo final del tutor, que es evaluar el dominio autónomo. Incorporaremos un procedimiento concreto de evaluación para obtener C, A, R y U mediante actividades y preguntas específicas. También registramos la necesidad de realizar nuevas corridas contra el evaluador.> |
