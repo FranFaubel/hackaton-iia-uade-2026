@@ -2,9 +2,9 @@
 
 > **Hackatón IIA · UADE · 3.4.257.** Este README es la plantilla del grupo. En su fork, reemplacen todo lo que está entre `< >` y borren esta nota. Las bases están en `BASES.md` y su ficha en `problematicas/`.
 
-**Integrantes:** <Francisco Faubel> · <Benjamin Ortiz>
-**IA declarada:** <Chat GPT>
-**Pista:** <Reglas >
+**Integrantes:** <Francisco_Faubel> · <Benjamin_Ortiz>
+**IA declarada:** <Chat_GPT>
+**Pista:** <Reglas>
 **Publicación en LinkedIn:** <link>
 
 ---
