@@ -190,6 +190,17 @@ Sin embargo, M09.csv no contiene esas cuatro variables. Por este motivo, para re
 Por lo tanto, las matrices de confusión y las métricas obtenidas evalúan esta regla simplificada, pero no demuestran por sí solas el rendimiento del sistema completo basado en C, A, R y U.
 
 Para validar el funcionamiento final será necesario recopilar datos que incluyan las cuatro dimensiones y sus resultados reales.
+### Control de consistencia de la rúbrica
+
+Para reducir las diferencias entre evaluaciones, el tutor utiliza una rúbrica con criterios y niveles de puntuación previamente definidos para cada dimensión.
+
+La IA debe justificar cada puntaje utilizando evidencias concretas de la respuesta del estudiante.
+
+Además, proponemos realizar dos evaluaciones independientes de una misma respuesta utilizando la misma rúbrica. Si ambas asignan el mismo puntaje o presentan una diferencia máxima de 5 puntos, se acepta el resultado promedio. Si la diferencia es superior a 5 puntos, se realiza una tercera evaluación y se revisan los criterios aplicados.
+
+Este mecanismo busca reducir la variabilidad de las correcciones y mejorar la consistencia del sistema.
+
+**Limitación:** este procedimiento es una medida de control propuesta. Todavía no fue comprobado con un conjunto de respuestas evaluadas repetidamente, por lo que será necesario realizar pruebas para medir su consistencia.
 
 >
 
@@ -318,6 +329,23 @@ Las matrices de confusión y las métricas obtenidas con M09.csv evalúan única
 
 Para validar el sistema final será necesario recopilar nuevos datos que incluyan los puntajes de las cuatro dimensiones y los resultados reales de las evaluaciones integradoras.
 
+### Evidencia de la relación entre Accuracy y la evaluación integradora
+
+Para analizar si Accuracy puede funcionar como una variable de referencia para predecir la aprobación de la evaluación integradora, comparamos las predicciones del sistema con los resultados reales registrados en M09.csv.
+
+Utilizando un umbral del 70%, obtuvimos:
+
+* Entrenamiento: 13 de 14 predicciones correctas (92,86%).
+* Prueba: 6 de 6 predicciones correctas (100%).
+* Total: 19 de 20 predicciones correctas (95%).
+
+Estos resultados muestran una coincidencia elevada entre las predicciones basadas en Accuracy y las etiquetas reales del conjunto de datos.
+
+Sin embargo, esta coincidencia constituye evidencia preliminar y no demuestra que Accuracy mida directamente la comprensión o el dominio autónomo del estudiante. Además, el conjunto de prueba contiene solamente seis casos, por lo que no podemos asegurar que el rendimiento se mantenga con nuevos estudiantes.
+
+Por este motivo, consideramos Accuracy una variable de referencia para una primera aproximación, pero no una sustitución de la evaluación integradora basada en comprensión conceptual, aplicación práctica, razonamiento y autonomía.
+
+Para comprobar la relación de manera más confiable, necesitamos recopilar nuevos casos en los que cada estudiante tenga tanto su porcentaje de aciertos como el resultado de una evaluación integradora independiente.
 
 >
 
@@ -433,3 +461,7 @@ De esta manera, evitamos que una única puntuación determine el aprendizaje y b
 | Corrida | Nota | Agujero que encontró | Qué cambiamos |
 |---|---|---|---|
 | 1 | <6> | <El sistema plantea evaluar cuatro dimensiones (C, A, R y U), pero los datos de M09.csv no contienen esas variables. En las matrices de confusión se utilizó realmente la variable Accuracy, con un umbral del 70%, para decidir entre SÍ y NO. Por lo tanto, el criterio utilizado para medir los resultados no coincide completamente con el objetivo planteado para el tutor. También falta explicar cómo se obtienen los puntajes C, A, R y U para un estudiante nuevo.> | <Aclaramos que las matrices y métricas calculadas corresponden a una clasificación basada exclusivamente en Accuracy ≥ 70%. Diferenciamos ese criterio inicial del objetivo final del tutor, que es evaluar el dominio autónomo. Incorporaremos un procedimiento concreto de evaluación para obtener C, A, R y U mediante actividades y preguntas específicas. También registramos la necesidad de realizar nuevas corridas contra el evaluador.> |
+| 2 | <6> | <Reconocen que las matrices miden solo Accuracy ≥ 70%, no el sistema con C, A, R y U. Entonces, ¿qué significa SÍ en su tabla: aprobar la evaluación integradora o tener 70% de aciertos? ¿Qué pasa con un alumno que aprueba la integradora pero tiene 67% de aciertos?
+> | <Definimos una rúbrica de cinco niveles, establecimos los criterios de evaluación de cada dimensión y diferenciamos la regla simplificada del objetivo final. También aclaramos el uso de las pistas, el tiempo y los temas avanzados.> |
+| 3 | <6> | <No se presentó evidencia suficiente de que Accuracy represente la aprobación de la evaluación integradora. Además, faltaba explicar cómo se controla la consistencia de las correcciones de la IA. La bitácora tampoco incluía la segunda corrida.> | <Incorporamos el análisis de coincidencia entre las predicciones y las etiquetas reales, explicitamos las limitaciones de los datos, propusimos un mecanismo de control de consistencia de la rúbrica y completamos el registro de las corridas anteriores.> |
+
